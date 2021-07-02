@@ -26,6 +26,7 @@ Widget mobileLayout(HomeController homeController, BuildContext context) {
                 autofocus: true,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.headline1.color,
                 ),
                 onChanged: (val) {
                   if (val.length > 0) homeController.trans(val);
