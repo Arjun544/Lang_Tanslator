@@ -1,16 +1,21 @@
-# my_translator
+# Lang_Translator
 
-A new Flutter project.
+instantly translates words & phrases,  between English and other languages.
 
-## Getting Started
+## Features:
+Supports every platform.
+Translate instantly.
+Supports over 100 langauges.
+Text to Speech support.
+Copy to clip board.
+Save favourite words for later.
+Dark and Light modes.
+Share translation on any other app.
 
-This project is a starting point for a Flutter application.
+## Web Images : 
+[![Capture.png](https://i.postimg.cc/nzmknwYf/Capture.png)](https://postimg.cc/bDzbTgBm)
+[![Capture2.png](https://i.postimg.cc/9XGpSKQG/Capture2.png)](https://postimg.cc/t74WnrPT)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Mobile Images : 
+[![Screenshot-1625189510.png](https://i.postimg.cc/76SgFJwx/Screenshot-1625189510.png)](https://postimg.cc/Hcsc5xrK)
+[![Screenshot-1625189479.png](https://i.postimg.cc/7hDgwPZS/Screenshot-1625189479.png)](https://postimg.cc/8JKFbSWC)
