@@ -1,11 +1,16 @@
+import 'dart:convert';
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_translator/models/lang_model.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:translator/translator.dart';
 
 class HomeController extends GetxController {
   GoogleTranslator translator = GoogleTranslator();
+  TextEditingController fieldController = TextEditingController();
   FlutterTts flutterTts = FlutterTts();
   GetStorage getStorage = GetStorage();
 
@@ -24,6 +29,7 @@ class HomeController extends GetxController {
     if (getStorage.read('stateValue') != null) {
       isDarkMode.value = getStorage.read('stateValue');
     }
+
     super.onInit();
   }
 
@@ -40,10 +46,18 @@ class HomeController extends GetxController {
     return await flutterTts.speak(text.toString());
   }
 
-  void saveToSF(List<String> savedWords) {
+  void saveToSF(String from, String to) {
     RxSharedPreferences sharedPreferences = RxSharedPreferences.getInstance();
+    final word = LangModel(from, to);
+    String json = jsonEncode(word);
+    savedWords.insert(0, json);
     sharedPreferences.setStringList('words', savedWords);
   }
+
+  // void saveToSF(List<String> savedWords) {
+
+  //   sharedPreferences.setStringList('words', savedWords);
+  // }
 
   void clearSF() {
     RxSharedPreferences sharedPreferences = RxSharedPreferences.getInstance();

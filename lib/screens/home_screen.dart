@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:hovering/hovering.dart';
+import 'package:my_translator/models/lang_model.dart';
 import '../controllers/home_controller.dart';
 import '../data/languages.dart';
 import '../utils/themeService_util.dart';
@@ -18,6 +21,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       body: LayoutBuilder(builder: (context, constraints) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               height: constraints.maxWidth <= 480
@@ -54,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                         'assets/logo.png',
                         height: constraints.maxWidth <= 480
                             ? Get.height * 0.03
-                            : Get.height * 0.05,
+                            : Get.height * 0.04,
                       ),
                       SizedBox(
                         width: constraints.maxWidth <= 480 ? 50 : 75,
@@ -201,33 +205,40 @@ class HomeScreen extends StatelessWidget {
                       ),
                     );
                   }
-                  return Expanded(
-                    child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                constraints.maxWidth <= 480 ? 3 : 10,
-                            childAspectRatio: 4,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
-                        itemCount: words.length,
-                        shrinkWrap: true,
-                        padding: constraints.maxWidth <= 480
-                            ? const EdgeInsets.only(left: 20, right: 22)
-                            : const EdgeInsets.only(left: 50, right: 50),
-                        itemBuilder: (BuildContext ctx, index) {
-                          return Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.2),
-                              borderRadius: constraints.maxWidth <= 480
-                                  ? BorderRadius.circular(7)
-                                  : BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  words[index],
+
+                  return Padding(
+                    padding: constraints.maxWidth <= 480
+                        ? const EdgeInsets.only(left: 20)
+                        : const EdgeInsets.only(left: 50),
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: words.map((word) {
+                        final item = LangModel.fromJson(jsonDecode(word));
+                        return Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          margin: const EdgeInsets.only(right: 15, bottom: 15),
+                          padding: const EdgeInsets.only(right: 15, left: 15),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.2),
+                            borderRadius: constraints.maxWidth <= 480
+                                ? BorderRadius.circular(7)
+                                : BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  homeController.isTyping.value = true;
+                                  homeController.typedWords.value = item.to;
+                                  homeController.fieldController.text =
+                                      item.from;
+
+                                  homeController.output.value = item.to;
+                                },
+                                child: Text(
+                                  item.from + ' --> ' + item.to,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -238,22 +249,99 @@ class HomeScreen extends StatelessWidget {
                                         .color,
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    words.removeAt(index);
-                                    homeController.saveToSF(words);
-                                  },
-                                  child: Icon(
-                                    Icons.delete_rounded,
-                                    color: Colors.red.withOpacity(0.5),
-                                    size: constraints.maxWidth <= 480 ? 18 : 20,
-                                  ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  RxSharedPreferences sharedPreferences =
+                                      RxSharedPreferences.getInstance();
+                                  words.remove(item);
+                                  sharedPreferences.setStringList(
+                                      'words', words);
+                                },
+                                child: Icon(
+                                  Icons.delete_rounded,
+                                  color: Colors.red.withOpacity(0.5),
+                                  size: constraints.maxWidth <= 480 ? 18 : 20,
                                 ),
-                              ],
-                            ),
-                          );
-                        }),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   );
+                  // return Expanded(
+                  //   child: GridView.builder(
+                  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //           crossAxisCount: constraints.maxWidth <= 480 ? 2 : 8,
+                  //           childAspectRatio: 6,
+                  //           crossAxisSpacing: 20,
+                  //           mainAxisSpacing: 20),
+                  //       itemCount: words.length,
+                  //       shrinkWrap: true,
+                  //       padding: constraints.maxWidth <= 480
+                  //           ? const EdgeInsets.only(
+                  //               left: 20, right: 22, bottom: 20)
+                  //           : const EdgeInsets.only(
+                  //               left: 50, right: 50, bottom: 20),
+                  //       itemBuilder: (BuildContext ctx, index) {
+                  //         final word =
+                  //             LangModel.fromJson(jsonDecode(words[index]));
+                  //         return Container(
+                  //           alignment: Alignment.center,
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.grey.withOpacity(0.2),
+                  //             borderRadius: constraints.maxWidth <= 480
+                  //                 ? BorderRadius.circular(7)
+                  //                 : BorderRadius.circular(10),
+                  //           ),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //             children: [
+                  //               InkWell(
+                  //                 onTap: () {
+                  //                   homeController.isTyping.value = true;
+                  //                   homeController.typedWords.value = word.to;
+                  //                   homeController.fieldController.text =
+                  //                       word.from;
+
+                  //                   homeController.output.value = word.to;
+                  //                 },
+                  //                 child: Text(
+                  //                   word.from + ' --> ' + word.to,
+                  //                   maxLines: 1,
+                  //                   overflow: TextOverflow.ellipsis,
+                  //                   style: TextStyle(
+                  //                     fontWeight: FontWeight.w600,
+                  //                     color: Theme.of(context)
+                  //                         .textTheme
+                  //                         .headline1
+                  //                         .color,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               InkWell(
+                  //                 onTap: () {
+                  //                   RxSharedPreferences sharedPreferences =
+                  //                       RxSharedPreferences.getInstance();
+                  //                   words.remove(words[index]);
+                  //                   sharedPreferences.setStringList(
+                  //                       'words', words);
+                  //                 },
+                  //                 child: Icon(
+                  //                   Icons.delete_rounded,
+                  //                   color: Colors.red.withOpacity(0.5),
+                  //                   size: constraints.maxWidth <= 480 ? 18 : 20,
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         );
+                  //       }),
+                  // );
                 }),
           ],
         );

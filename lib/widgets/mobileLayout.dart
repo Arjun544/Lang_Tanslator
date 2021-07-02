@@ -22,12 +22,13 @@ Widget mobileLayout(HomeController homeController, BuildContext context) {
                     BoxShadow(color: Colors.black12, blurRadius: 3),
                   ]),
               child: TextField(
+                controller: homeController.fieldController,
+                autofocus: true,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
                 onChanged: (val) {
                   if (val.length > 0) homeController.trans(val);
-
                   homeController.typedWords.value = val;
                   homeController.isTyping.value = true;
                 },
@@ -66,9 +67,11 @@ Widget mobileLayout(HomeController homeController, BuildContext context) {
                     BoxShadow(color: Colors.black38, blurRadius: 3),
                   ]),
               child: SelectableText(
-                homeController.typedWords.value.length > 0
+                homeController.isTyping.value
                     ? homeController.output.value
-                    : 'Translation',
+                    : homeController.typedWords.value.length > 0
+                        ? homeController.output.value
+                        : 'Translation',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

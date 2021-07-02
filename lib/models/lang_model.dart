@@ -4,10 +4,15 @@ class LangModel {
 
   LangModel(this.from, this.to);
 
-  Map toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'to': to,
       'from': from,
     };
+  }
+
+  LangModel.fromJson(Map<String, dynamic> json) {
+    from = json['from'];
+    to = json['to'];
   }
 }

@@ -27,6 +27,8 @@ Widget webLayout(HomeController homeController, BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
+                  controller: homeController.fieldController,
+                  autofocus: true,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).textTheme.headline1.color,
@@ -78,9 +80,11 @@ Widget webLayout(HomeController homeController, BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SelectableText(
-                  homeController.typedWords.value.length > 0
+                  homeController.isTyping.value
                       ? homeController.output.value
-                      : 'Translation',
+                      : homeController.typedWords.value.length > 0
+                          ? homeController.output.value
+                          : 'Translation',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

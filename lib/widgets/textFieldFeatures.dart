@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -39,7 +38,10 @@ class TextFieldFeatures extends StatelessWidget {
                             ? Text(
                                 'Copied',
                                 style: TextStyle(
-                                  color: Theme.of(context).textTheme.headline4.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      .color,
                                   fontWeight: FontWeight.bold,
                                 ),
                               )
@@ -71,9 +73,10 @@ class TextFieldFeatures extends StatelessWidget {
                     size: 25.0,
                   ),
                   onPressed: () {
-                    controller.savedWords
-                        .insert(0, controller.typedWords.value);
-                    controller.saveToSF(controller.savedWords);
+                    // controller.savedWords
+                    //     .insert(0, controller.typedWords.value);
+                    controller.saveToSF(
+                        controller.typedWords.value, controller.output.value);
                   },
                 ),
                 IconButton(
