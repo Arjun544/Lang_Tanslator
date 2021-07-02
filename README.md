@@ -3,14 +3,14 @@
 instantly translates words & phrases,  between English and other languages.
 
 ## Features:
-Supports every platform.
-Translate instantly.
-Supports over 100 langauges.
-Text to Speech support.
-Copy to clip board.
-Save favourite words for later.
-Dark and Light modes.
-Share translation on any other app.
+Supports every platform.<br/>
+Translate instantly.<br/>
+Supports over 100 langauges.<br/>
+Text to Speech support.<br/>
+Copy to clip board.<br/>
+Save favourite words for later.<br/>
+Dark and Light modes.<br/>
+Share translation on any other app.<br/>
 
 ## Web Images : 
 [![Capture.png](https://i.postimg.cc/nzmknwYf/Capture.png)](https://postimg.cc/bDzbTgBm)
