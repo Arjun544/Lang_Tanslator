@@ -5,30 +5,7 @@ class MyThemes {
     backgroundColor: Colors.white,
     popupMenuTheme: PopupMenuThemeData(color: Colors.white),
     primaryColor: Color(0xFF2978B5),
-    buttonColor: Colors.black,
-    // appBarTheme: AppBarTheme(
-    //   textTheme: TextTheme(
-    //     headline1: TextStyle(
-    //       fontSize: 30,
-    //       color: CustomColors.darkColor,
-    //       fontWeight: FontWeight.bold,
-    //     ),
-    //   ),
-    //   iconTheme: IconThemeData(
-    //     color: CustomColors.blackColor,
-    //   ),
-    // ),
-    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    //   backgroundColor: Colors.white,
-    //   elevation: 15,
-    //   unselectedItemColor: Colors.grey,
-    //   selectedItemColor: CustomColors.blackColor,
-    // ),
-    // floatingActionButtonTheme: FloatingActionButtonThemeData(
-    //   foregroundColor: CustomColors.blackColor,
-    //   backgroundColor: Colors.white70,
-    // ),
-    accentColor: Color(0xFFA2DBFA),
+    buttonTheme:ButtonThemeData(buttonColor: Colors.black),
     textTheme: TextTheme(
       headline2: TextStyle(
         color: Colors.black,
@@ -39,17 +16,16 @@ class MyThemes {
     cardColor: Colors.white, // Profile & Fav Screens card
     cardTheme: CardTheme(
       color: Colors.black.withOpacity(0.2),
-    ), // Articles Screen card
+    ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFA2DBFA)), // Articles Screen card
   );
 
   static final ThemeData dark = ThemeData(
     backgroundColor: Color(0xFF171717),
     popupMenuTheme: PopupMenuThemeData(color: Colors.black),
-    buttonColor: Colors.white,
+    buttonTheme: ButtonThemeData(buttonColor: Colors.white),
     cardTheme: CardTheme(
       color: Colors.white.withOpacity(0.2),
     ),
-    accentColor: Color(0xFF39A2DB),
     primaryColor: Color(0xFF3C415C),
     // bottomNavigationBarTheme: BottomNavigationBarThemeData(
     //   elevation: 15,

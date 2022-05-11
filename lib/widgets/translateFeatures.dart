@@ -32,40 +32,40 @@ class TranslateFeatures extends StatelessWidget {
             ),
             Row(
               children: [
-                Obx(() => Row(
-                      children: [
-                        controller.isOutputCopied.value
-                            ? Text(
-                                'Copied',
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline4
-                                      .color,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            : Text(''),
-                        IconButton(
-                          icon: Icon(
-                            Icons.copy_rounded,
-                            color: Theme.of(context).textTheme.headline3.color,
-                            size: constraints.maxWidth <= 480 ? 20 : 25.0,
-                          ),
-                          onPressed: () {
-                            Clipboard.setData(ClipboardData(
-                              text: controller.output.value.toString(),
-                            ));
-
-                            controller.isOutputCopied.value = true;
-
-                            Future.delayed(Duration(seconds: 1), () {
-                              controller.isOutputCopied.value = false;
-                            });
-                          },
+                Obx(
+                  () => Row(
+                    children: [
+                      controller.isOutputCopied.value
+                          ? Text(
+                              'Copied',
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.headline4.color,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : Text(''),
+                      IconButton(
+                        icon: Icon(
+                          Icons.copy_rounded,
+                          color: Theme.of(context).textTheme.headline3.color,
+                          size: constraints.maxWidth <= 480 ? 20 : 25.0,
                         ),
-                      ],
-                    )),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(
+                            text: controller.output.value.toString(),
+                          ));
+
+                          controller.isOutputCopied.value = true;
+
+                          Future.delayed(Duration(seconds: 1), () {
+                            controller.isOutputCopied.value = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 IconButton(
                   icon: Icon(
                     Icons.star_border_rounded,

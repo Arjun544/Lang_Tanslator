@@ -59,9 +59,10 @@ class HomeController extends GetxController {
   //   sharedPreferences.setStringList('words', savedWords);
   // }
 
-  void clearSF() {
+  void clearSF() async {
     RxSharedPreferences sharedPreferences = RxSharedPreferences.getInstance();
-    sharedPreferences.clear();
+    // await sharedPreferences.clear();
+    sharedPreferences.setStringList('words', []);
   }
 
   void saveSwitchState() {

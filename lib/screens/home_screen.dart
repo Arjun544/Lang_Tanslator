@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:hovering/hovering.dart';
 import 'package:my_translator/models/lang_model.dart';
@@ -86,54 +85,46 @@ class HomeScreen extends StatelessWidget {
                         hoverWidth: 175,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).cardTheme.color,
+                          color: Colors.blue,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            canvasColor: Theme.of(context).popupMenuTheme.color,
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: Obx(
-                              () => DropdownButton<String>(
-                                value: homeController.chosenValue.value,
-                                elevation: 5,
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline2
-                                      .color,
-                                ),
-                                iconEnabledColor: Colors.white,
-                                items: languages
-                                    .map((string, value) {
-                                      return MapEntry(
-                                        string,
-                                        DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            string,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                        child: DropdownButtonHideUnderline(
+                          child: Obx(
+                            () => DropdownButton<String>(
+                              value: homeController.chosenValue.value,
+                              elevation: 5,
+                              style: TextStyle(color: Colors.white),
+                              iconEnabledColor: Colors.white,
+                              items: languages
+                                  .map((string, value) {
+                                    return MapEntry(
+                                      string,
+                                      DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          string,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      );
-                                    })
-                                    .values
-                                    .toList(),
-                                hint: Text(
-                                  "English",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                onChanged: (String value) {
-                                  homeController.chosenValue.value = value;
-                                  homeController
-                                      .trans(homeController.output.value);
-                                },
+                                      ),
+                                    );
+                                  })
+                                  .values
+                                  .toList(),
+                              hint: Text(
+                                "English",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               ),
+                              onChanged: (String value) {
+                                homeController.chosenValue.value = value;
+                                homeController
+                                    .trans(homeController.output.value);
+                              },
                             ),
                           ),
                         ),
@@ -220,154 +211,177 @@ class HomeScreen extends StatelessWidget {
                         );
                       }
 
-                      return Padding(
-                        padding: constraints.maxWidth <= 480
-                            ? const EdgeInsets.only(left: 20)
-                            : const EdgeInsets.only(left: 50),
-                        child: Row(
-                          children: [
-                            Wrap(
-                              direction: Axis.horizontal,
-                              children: words.map((word) {
-                                final item =
-                                    LangModel.fromJson(jsonDecode(word));
-                                return Container(
-                                  alignment: Alignment.center,
-                                  height: 40,
-                                  margin: const EdgeInsets.only(
-                                      right: 15, bottom: 15),
-                                  padding: const EdgeInsets.only(
-                                      right: 15, left: 15),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    borderRadius: constraints.maxWidth <= 480
-                                        ? BorderRadius.circular(7)
-                                        : BorderRadius.circular(10),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          homeController.isTyping.value = true;
-                                          homeController.typedWords.value =
-                                              item.to;
-                                          homeController.fieldController.text =
-                                              item.from;
+                      // return
+                      // Padding(
+                      //   padding: constraints.maxWidth <= 480
+                      //       ? const EdgeInsets.only(left: 20)
+                      //       : const EdgeInsets.only(left: 50),
+                      //   child: SizedBox(
+                      //     width: Get.width,
+                      //     child: Row(
+                      //       children: [
+                      //         Wrap(
+                      //           direction: Axis.horizontal,
+                      //           children: words.mapIndexed((index, word) {
+                      //             final item =
+                      //                 LangModel.fromJson(jsonDecode(word));
+                      //             return Container(
+                      //               alignment: Alignment.center,
+                      //               height: 40,
+                      //               margin: const EdgeInsets.only(
+                      //                   right: 15, bottom: 15),
+                      //               padding: const EdgeInsets.only(
+                      //                   right: 15, left: 15),
+                      //               decoration: BoxDecoration(
+                      //                 color: Colors.grey.withOpacity(0.2),
+                      //                 borderRadius: constraints.maxWidth <= 480
+                      //                     ? BorderRadius.circular(7)
+                      //                     : BorderRadius.circular(10),
+                      //               ),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceAround,
+                      //                 children: [
+                      //                   InkWell(
+                      //                     onTap: () {
+                      //                       homeController.isTyping.value =
+                      //                           true;
+                      //                       homeController.typedWords.value =
+                      //                           item.to;
+                      //                       homeController.fieldController
+                      //                           .text = item.from;
 
-                                          homeController.output.value = item.to;
-                                        },
-                                        child: Text(
-                                          item.from + ' --> ' + item.to,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .headline1
-                                                .color,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          RxSharedPreferences
-                                              sharedPreferences =
-                                              RxSharedPreferences.getInstance();
-                                          words.remove(item);
-                                          sharedPreferences.setStringList(
-                                              'words', words);
-                                        },
-                                        child: Icon(
-                                          Icons.delete_rounded,
-                                          color: Colors.red.withOpacity(0.5),
-                                          size: constraints.maxWidth <= 480
-                                              ? 18
-                                              : 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      );
-                      // return Expanded(
-                      //   child: GridView.builder(
-                      //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //           crossAxisCount: constraints.maxWidth <= 480 ? 2 : 8,
-                      //           childAspectRatio: 6,
-                      //           crossAxisSpacing: 20,
-                      //           mainAxisSpacing: 20),
-                      //       itemCount: words.length,
-                      //       shrinkWrap: true,
-                      //       padding: constraints.maxWidth <= 480
-                      //           ? const EdgeInsets.only(
-                      //               left: 20, right: 22, bottom: 20)
-                      //           : const EdgeInsets.only(
-                      //               left: 50, right: 50, bottom: 20),
-                      //       itemBuilder: (BuildContext ctx, index) {
-                      //         final word =
-                      //             LangModel.fromJson(jsonDecode(words[index]));
-                      //         return Container(
-                      //           alignment: Alignment.center,
-                      //           decoration: BoxDecoration(
-                      //             color: Colors.grey.withOpacity(0.2),
-                      //             borderRadius: constraints.maxWidth <= 480
-                      //                 ? BorderRadius.circular(7)
-                      //                 : BorderRadius.circular(10),
-                      //           ),
-                      //           child: Row(
-                      //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //             children: [
-                      //               InkWell(
-                      //                 onTap: () {
-                      //                   homeController.isTyping.value = true;
-                      //                   homeController.typedWords.value = word.to;
-                      //                   homeController.fieldController.text =
-                      //                       word.from;
-
-                      //                   homeController.output.value = word.to;
-                      //                 },
-                      //                 child: Text(
-                      //                   word.from + ' --> ' + word.to,
-                      //                   maxLines: 1,
-                      //                   overflow: TextOverflow.ellipsis,
-                      //                   style: TextStyle(
-                      //                     fontWeight: FontWeight.w600,
-                      //                     color: Theme.of(context)
-                      //                         .textTheme
-                      //                         .headline1
-                      //                         .color,
+                      //                       homeController.output.value =
+                      //                           item.to;
+                      //                     },
+                      //                     child: Text(
+                      //                       item.from + ' --> ' + item.to,
+                      //                       maxLines: 1,
+                      //                       overflow: TextOverflow.ellipsis,
+                      //                       style: TextStyle(
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Theme.of(context)
+                      //                             .textTheme
+                      //                             .headline1
+                      //                             .color,
+                      //                       ),
+                      //                     ),
                       //                   ),
-                      //                 ),
+                      //                   SizedBox(
+                      //                     width: 20,
+                      //                   ),
+                      //                   InkWell(
+                      //                     onTap: () {
+                      //                       RxSharedPreferences
+                      //                           sharedPreferences =
+                      //                           RxSharedPreferences
+                      //                               .getInstance();
+                      //                       homeController.savedWords
+                      //                           .removeAt(index);
+                      //                       log(homeController.savedWords
+                      //                           .toString());
+                      //                       sharedPreferences.setStringList(
+                      //                           'words',
+                      //                           homeController.savedWords);
+                      //                     },
+                      //                     child: Icon(
+                      //                       Icons.delete_rounded,
+                      //                       color: Colors.red.withOpacity(0.5),
+                      //                       size: constraints.maxWidth <= 480
+                      //                           ? 18
+                      //                           : 20,
+                      //                     ),
+                      //                   ),
+                      //                 ],
                       //               ),
-                      //               InkWell(
-                      //                 onTap: () {
-                      //                   RxSharedPreferences sharedPreferences =
-                      //                       RxSharedPreferences.getInstance();
-                      //                   words.remove(words[index]);
-                      //                   sharedPreferences.setStringList(
-                      //                       'words', words);
-                      //                 },
-                      //                 child: Icon(
-                      //                   Icons.delete_rounded,
-                      //                   color: Colors.red.withOpacity(0.5),
-                      //                   size: constraints.maxWidth <= 480 ? 18 : 20,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         );
-                      //       }),
+                      //             );
+                      //           }).toList(),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
                       // );
+                      return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: constraints.maxWidth <= 480
+                                      ? 1
+                                      : constraints.maxWidth <= 600
+                                          ? 2
+                                          : constraints.maxWidth <= 900
+                                              ? 3
+                                              : constraints.maxWidth <= 1200
+                                                  ? 4
+                                                  : 6,
+                                  childAspectRatio: 6,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20),
+                          itemCount: words.length,
+                          shrinkWrap: true,
+                          padding: constraints.maxWidth <= 480
+                              ? const EdgeInsets.only(
+                                  left: 20, right: 22, bottom: 20)
+                              : const EdgeInsets.only(
+                                  left: 50, right: 50, bottom: 20),
+                          itemBuilder: (BuildContext ctx, index) {
+                            final word =
+                                LangModel.fromJson(jsonDecode(words[index]));
+                            return Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.2),
+                                borderRadius: constraints.maxWidth <= 480
+                                    ? BorderRadius.circular(7)
+                                    : BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      homeController.isTyping.value = true;
+                                      homeController.typedWords.value = word.to;
+                                      homeController.fieldController.text =
+                                          word.from;
+
+                                      homeController.output.value = word.to;
+                                    },
+                                    child: SizedBox(
+                                      width: 150,
+                                      child: Text(
+                                        word.from + ' --> ' + word.to,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .headline1
+                                              .color,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      RxSharedPreferences sharedPreferences =
+                                          RxSharedPreferences.getInstance();
+                                      words.remove(words[index]);
+                                      sharedPreferences.setStringList(
+                                          'words', words);
+                                    },
+                                    child: Icon(
+                                      Icons.delete_rounded,
+                                      color: Colors.red.withOpacity(0.5),
+                                      size:
+                                          constraints.maxWidth <= 480 ? 18 : 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
                     }),
               ],
             ),
