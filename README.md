@@ -1,6 +1,6 @@
 # Lang_Translator
 
-instantly translates words & phrases,  between English and other languages.
+Instantly translates words & phrases,  between English and other languages.
 
 ## Features:
 Supports every platform.<br/>
