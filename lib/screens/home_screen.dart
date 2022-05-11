@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   height: constraints.maxWidth <= 480
                       ? Get.height * 0.15
-                      : Get.height * 0.17,
+                      : Get.height * 0.22,
                   padding: constraints.maxWidth <= 480
                       ? const EdgeInsets.only(
                           right: 20,
@@ -310,7 +310,7 @@ class HomeScreen extends StatelessWidget {
                                           ? 2
                                           : constraints.maxWidth <= 900
                                               ? 3
-                                              : constraints.maxWidth <= 1200
+                                              : constraints.maxWidth <= 1400
                                                   ? 4
                                                   : 6,
                                   childAspectRatio: 6,
