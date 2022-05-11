@@ -62,7 +62,7 @@ Widget mobileLayout(HomeController homeController, BuildContext context) {
               width: Get.width,
               padding: const EdgeInsets.only(top: 20, left: 20),
               decoration: BoxDecoration(
-                  color: Theme.of(context).buttonTheme.colorScheme.secondary,
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(color: Colors.black38, blurRadius: 3),

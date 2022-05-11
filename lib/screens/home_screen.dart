@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       HoverAnimatedContainer(
                         height: 40,
-                        width: 170,
+                        width: Get.width * 0.5,
                         hoverHeight: 45,
                         hoverWidth: 175,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
